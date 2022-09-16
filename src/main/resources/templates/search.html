@@ -37,7 +37,13 @@
     <hr />
 
     <!-- TODO #4 - Loop over the search results to display all job fields. -->
-
+    <div th:each="job, idx : ${jobs}" th:class="${idx.odd} ? 'odd'">
+        <table th:class="job-listing">
+            <tr th:each="line : ${job}">
+                <td th:text="${#strings.capitalizeWords(line.key)}"></td>
+                <td th:text="${line.value}"></td>
+            </tr>
+        </table>
 </div>
 
 </body>
