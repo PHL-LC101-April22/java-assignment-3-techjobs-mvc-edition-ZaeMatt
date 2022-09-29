@@ -7,10 +7,7 @@ import org.launchcode.techjobs.mvc.NameSorter;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,38 +25,22 @@ public class JobData {
     private static ArrayList<PositionType> allPositionTypes = new ArrayList<>();
     private static ArrayList<CoreCompetency> allCoreCompetency = new ArrayList<>();
 
-    /**
-     * Fetch list of all job objects from loaded data,
-     * without duplicates, then return a copy.
-     */
 
     public static ArrayList<Job> findAll() {
 
-        // load data, if not already loaded
         loadData();
 
-        // Bonus mission; normal version returns allJobs
         return new ArrayList<>(allJobs);
     }
 
-    /**
-     * Returns the results of searching the Jobs data by field and search term.
-     *
-     * For example, searching for employer "Enterprise" will include results
-     * with "Enterprise Holdings, Inc".
-     *
-     * @param column Job field that should be searched.
-     * @param value Value of the field to search for.
-     * @return List of all jobs matching the criteria.
-     */
+
     public static ArrayList<Job> findByColumnAndValue(String column, String value) {
 
-        // load data, if not already loaded
         loadData();
 
         ArrayList<Job> jobs = new ArrayList<>();
 
-        if (value.toLowerCase().equals("all")){
+        if (value.equalsIgnoreCase("all")){
             return findAll();
         }
 
@@ -95,15 +76,9 @@ public class JobData {
 
         return theValue;
     }
-    /**
-     * Search all Job fields for the given term.
-     *
-     * @param value The search term to look for.
-     * @return      List of all jobs with at least one field containing the value.
-     */
+
     public static ArrayList<Job> findByValue(String value) {
 
-        // load data, if not already loaded
         loadData();
 
         ArrayList<Job> jobs = new ArrayList<>();
@@ -129,26 +104,23 @@ public class JobData {
 
     private static Object findExistingObject(ArrayList list, String value){
         for (Object item : list){
-            if (item.toString().toLowerCase().equals(value.toLowerCase())){
+            if (item.toString().equalsIgnoreCase(value)){
                 return item;
             }
         }
         return null;
     }
 
-    /**
-     * Read in data from a CSV file and store it in an ArrayList of Job objects.
-     */
+
     private static void loadData() {
 
-        // Only load data once
         if (isDataLoaded) {
             return;
         }
 
         try {
 
-            // Open the CSV file and set up pull out column header info and records
+
             Resource resource = new ClassPathResource(DATA_FILE);
             InputStream is = resource.getInputStream();
             Reader reader = new InputStreamReader(is);
@@ -159,7 +131,7 @@ public class JobData {
 
             allJobs = new ArrayList<>();
 
-            // Put the records into a more friendly format
+
             for (CSVRecord record : records) {
 
                 String aName = record.get(0);
@@ -197,7 +169,7 @@ public class JobData {
 
                 allJobs.add(newJob);
             }
-            // flag the data as loaded, so we don't do it twice
+
             isDataLoaded = true;
 
         } catch (IOException e) {
