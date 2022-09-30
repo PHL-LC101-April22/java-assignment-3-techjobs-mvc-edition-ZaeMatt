@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static org.launchcode.techjobs.mvc.controllers.ListController.columnChoices;
 
@@ -17,6 +18,7 @@ import static org.launchcode.techjobs.mvc.controllers.ListController.columnChoic
 @RequestMapping("search")
 public class SearchController {
 
+
     @RequestMapping(value = "")
     public String search(Model model) {
         model.addAttribute("columns", columnChoices);
@@ -25,13 +27,13 @@ public class SearchController {
 
 
     @RequestMapping(value = "results")
-    public String displaySearchResults(Model model, @RequestParam String searchType, @RequestParam String searchTerm) {
-        ArrayList<Job> jobs;
-        jobs = JobData.findByColumnAndValue(searchType, searchTerm);
-        model.addAttribute("type", searchType);
+    public String search(Model model, @RequestParam String searchType, String searchTerm) {
+        ArrayList<HashMap<String, String>> jobs = JobData.findByValue(searchTerm);
         model.addAttribute("columns", columnChoices);
-        model.addAttribute("title", "Search Condition: " + columnChoices.get(searchType) + " Search Term: " + searchTerm);
+        model.addAttribute("title", "All Jobs");
+        model.addAttribute("column", searchType);
         model.addAttribute("jobs", jobs);
-        return "search.html";
+        return "search";
     }
+
 }
