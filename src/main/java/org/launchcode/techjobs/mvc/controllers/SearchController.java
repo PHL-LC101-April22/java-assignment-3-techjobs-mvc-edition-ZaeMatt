@@ -28,8 +28,8 @@ public class SearchController {
 
     @RequestMapping(value = "results")
     @PostMapping("results")
-    public String displaySearchResults(Model model, @RequestParam String searchType, String searchTerm) {
-        ArrayList<Job> jobs = JobData.findByValue(searchTerm);
+    public String displaySearchResults(Model model, @RequestParam String searchType,@RequestParam String searchTerm) {
+        ArrayList<Job> jobs = JobData.findByColumnAndValue(searchType, searchTerm);
         if (searchTerm.equals("")) {
             jobs = JobData.findAll();
         } else if (searchTerm.equalsIgnoreCase("all")) {
