@@ -27,8 +27,15 @@ public class SearchController {
 
 
     @RequestMapping(value = "results")
-    public String search(Model model, @RequestParam String searchType, String searchTerm) {
-        ArrayList<HashMap<String, String>> jobs = JobData.findByValue(searchTerm);
+    @PostMapping("results")
+    public String displaySearchResults(Model model, @RequestParam String searchType, String searchTerm) {
+        ArrayList<Job> jobs = JobData.findByValue(searchTerm);
+        if (searchTerm.equals("")) {
+            jobs = JobData.findAll();
+        } else if (searchTerm.equalsIgnoreCase("all")) {
+            jobs = JobData.findAll();
+        }
+
         model.addAttribute("columns", columnChoices);
         model.addAttribute("title", "All Jobs");
         model.addAttribute("column", searchType);

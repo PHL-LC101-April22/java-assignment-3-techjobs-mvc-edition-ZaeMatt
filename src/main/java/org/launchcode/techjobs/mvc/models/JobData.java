@@ -40,11 +40,11 @@ public class JobData {
 
         ArrayList<Job> jobs = new ArrayList<>();
 
-        if (value.equalsIgnoreCase("all")){
+        if (value.equalsIgnoreCase("all")) {
             return findAll();
         }
 
-        if (column.equals("all")){
+        if (column.equals("all")) {
             jobs = findByValue(value);
             return jobs;
         }
@@ -60,15 +60,15 @@ public class JobData {
         return jobs;
     }
 
-    public static String getFieldValue(Job job, String fieldName){
+    public static String getFieldValue(Job job, String fieldName) {
         String theValue;
-        if (fieldName.equals("name")){
+        if (fieldName.equals("name")) {
             theValue = job.getName();
-        } else if (fieldName.equals("employer")){
+        } else if (fieldName.equals("employer")) {
             theValue = job.getEmployer().toString();
-        } else if (fieldName.equals("location")){
+        } else if (fieldName.equals("location")) {
             theValue = job.getLocation().toString();
-        } else if (fieldName.equals("positionType")){
+        } else if (fieldName.equals("positionType")) {
             theValue = job.getPositionType().toString();
         } else {
             theValue = job.getCoreCompetency().toString();
@@ -82,6 +82,9 @@ public class JobData {
         loadData();
 
         ArrayList<Job> jobs = new ArrayList<>();
+
+
+
 
         for (Job job : allJobs) {
 
@@ -97,14 +100,15 @@ public class JobData {
                 jobs.add(job);
             }
 
+
         }
 
         return jobs;
     }
 
-    private static Object findExistingObject(ArrayList list, String value){
-        for (Object item : list){
-            if (item.toString().equalsIgnoreCase(value)){
+    private static Object findExistingObject(ArrayList list, String value) {
+        for (Object item : list) {
+            if (item.toString().equalsIgnoreCase(value)) {
                 return item;
             }
         }
@@ -145,22 +149,22 @@ public class JobData {
                 PositionType newPosition = (PositionType) findExistingObject(allPositionTypes, aPosition);
                 CoreCompetency newSkill = (CoreCompetency) findExistingObject(allCoreCompetency, aSkill);
 
-                if (newEmployer == null){
+                if (newEmployer == null) {
                     newEmployer = new Employer(anEmployer);
                     allEmployers.add(newEmployer);
                 }
 
-                if (newLocation == null){
+                if (newLocation == null) {
                     newLocation = new Location(aLocation);
                     allLocations.add(newLocation);
                 }
 
-                if (newSkill == null){
+                if (newSkill == null) {
                     newSkill = new CoreCompetency(aSkill);
                     allCoreCompetency.add(newSkill);
                 }
 
-                if (newPosition == null){
+                if (newPosition == null) {
                     newPosition = new PositionType(aPosition);
                     allPositionTypes.add(newPosition);
                 }
